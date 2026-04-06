@@ -58,7 +58,7 @@ export default function DemoVideo() {
               { label: "Review",    color: "bg-violet-500/20 text-violet-400" },
               { label: "Approve",   color: "bg-amber-500/20 text-amber-400" },
               { label: "Verified",  color: "bg-emerald-500/20 text-emerald-400" },
-            ].map((step, i) => (
+            ].map((step) => (
               <div
                 key={step.label}
                 className={`flex-1 border-l border-[var(--border)] px-2 py-2 text-center first:border-l-0 ${step.color}`}

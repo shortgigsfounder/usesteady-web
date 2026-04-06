@@ -29,12 +29,12 @@ export default function WhoIsItFor() {
   return (
     <section className="section-shell border-t border-[var(--border)]">
       <div className="mx-auto max-w-6xl">
-        <p className="section-label">Who it's for</p>
+        <p className="section-label">Who it&apos;s for</p>
         <h2 className="section-title mt-2">
           Built for people who care about what actually runs.
         </h2>
         <p className="section-copy mt-3 max-w-xl">
-          If you've ever shipped something and thought "wait — did that really run correctly?",
+          If you&apos;ve ever shipped something and thought &ldquo;wait &mdash; did that really run correctly?&rdquo;,
           UseSteady is for you.
         </p>
 

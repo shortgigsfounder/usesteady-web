@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Capability from "@/components/sections/Capability";
 import FinalCTA from "@/components/sections/FinalCTA";
 import Hero from "@/components/sections/Hero";
@@ -17,10 +18,10 @@ export default function Home() {
       {/* ── Nav ──────────────────────────────────────────────────────────── */}
       <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[var(--bg-base)]/95 backdrop-blur-sm">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3 md:px-10">
-          <a href="/" className="flex items-center gap-2.5 transition-opacity hover:opacity-80">
+          <Link href="/" className="flex items-center gap-2.5 transition-opacity hover:opacity-80">
             <AppIcon size={28} />
             <span className="mono text-sm font-semibold tracking-tight text-[var(--text-1)]">UseSteady</span>
-          </a>
+          </Link>
 
           <nav className="hidden items-center gap-6 md:flex">
             <a href="#demo"         className="text-xs font-medium text-[var(--text-2)] transition-colors duration-150 hover:text-[var(--text-1)]">Demo</a>
@@ -69,10 +70,10 @@ export default function Home() {
       {/* ── Footer ───────────────────────────────────────────────────────── */}
       <footer className="border-t border-[var(--border)] px-6 py-8 md:px-10">
         <div className="mx-auto flex max-w-6xl flex-col gap-3 md:flex-row md:items-center md:justify-between">
-          <a href="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
+          <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
             <AppIcon size={20} />
             <span className="mono text-xs font-semibold text-[var(--text-2)]">UseSteady</span>
-          </a>
+          </Link>
           <p className="mono text-xs leading-6 text-[var(--text-4)]">
             If it can&apos;t be reviewed, it doesn&apos;t run.
           </p>

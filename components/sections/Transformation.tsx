@@ -34,7 +34,7 @@ export default function Transformation() {
               </p>
               <div className="rounded border border-blue-500/20 bg-blue-500/5 px-3 py-3 sm:px-4 sm:py-4">
                 <p className="text-sm leading-7 text-[var(--text-1)]">
-                  "Change bg-white to bg-slate-950 in app/globals.css, run the tests, then commit."
+                  &ldquo;Change bg-white to bg-slate-950 in app/globals.css, run the tests, then commit.&rdquo;
                 </p>
               </div>
               <div className="mt-4 space-y-2">

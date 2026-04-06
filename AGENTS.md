@@ -236,3 +236,76 @@ transcript **15f8ea04-c337-4931-bcec-9ec2ba99c6dc** in the parent repo's
 - Do not commit `/node_modules`, `/.next`, `/out`, `/demo-frames`, `.vercel/`
 - Do not add LLM/AI inference (it's a marketing site)
 - Do not touch Cloudflare DNS or Vercel project settings — they are configured correctly
+
+---
+
+## Lessons learned (April 2026 session)
+
+### Git push ≠ Vercel deploy (verify before assuming)
+
+`git push origin main` does NOT guarantee a live deployment. The CI/CD pipeline
+requires GitHub Actions to process the push, run CI, and fire the deploy workflow.
+Any break in that chain (stale CI, secret expiry, webhook miss) means Vercel
+production stays on the last known-good build silently.
+
+**Always verify with:**
+```bash
+npx vercel ls
+```
+Check the `Age` column. If it is older than your push, no deploy fired.
+
+**Reliable fallback — always works:**
+```bash
+npx vercel --prod
+```
+Use this whenever the user reports "not seeing changes". Do not debug the CI
+pipeline first; deploy directly, confirm live, then debug CI if needed.
+
+### "Not seeing changes" — full diagnostic checklist
+
+1. `git log --oneline -3` → is the commit on `main`?
+2. `git status` → any uncommitted edits?
+3. `npx vercel ls` → is there a fresh deployment (< 5 min old)?
+4. If no fresh deployment → `npx vercel --prod`
+5. Ask user to hard-refresh (`Ctrl+Shift+R`) — browser may be caching the old build
+6. Confirm URL is `https://usesteady.dev` not a preview URL
+
+### Component content must use plain-language examples
+
+Interactive components (`HeroDemo`, `TryIt`, `DemoWalkthrough`, `Transformation`)
+must show examples a non-technical founder could type verbatim. Concrete rule:
+
+| Bad (reject)                                      | Good (accept)                                      |
+|---------------------------------------------------|----------------------------------------------------|
+| `Change bg-white to bg-slate-950 in globals.css`  | `Run the tests. If everything passes, commit.`     |
+| `npm run build && git commit -m "fix"`            | `What changed since yesterday?`                    |
+| `Update src/index.ts line 42`                     | `Find all TODO comments in the codebase`           |
+
+Test: if you need to explain what the example means, it's not plain language.
+
+### Syncing changes from C:/Forge/web → C:/usesteady-web
+
+If you ever find yourself working in `C:/Forge/web/` by mistake (e.g. following
+a file reference from the monorepo), copy your changes out before committing:
+
+```powershell
+# Example: copy a single component
+Copy-Item "C:\Forge\web\components\sections\Hero.tsx" `
+          "C:\usesteady-web\components\sections\Hero.tsx" -Force
+```
+
+Always run `npx tsc --noEmit` and `npm run lint` inside `C:/usesteady-web` after
+syncing to catch type errors introduced by the copy.
+
+### Next.js version in this repo
+
+This repo runs **Next.js 16** (Turbopack). The monorepo `C:/Forge/web/` may show
+a different version in docs or generated outputs — always trust `package.json`
+in this repo, not the monorepo.
+
+### vercel.json must stay minimal
+
+Only two top-level keys are allowed: `$schema` and `headers`. Any other key
+(`buildCommand`, `outputDirectory`, `rootDirectory`, `framework`) triggers
+schema validation errors or routing breaks. If `vercel.json` grows beyond
+these two keys, remove the extras immediately.

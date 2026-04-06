@@ -1,0 +1,205 @@
+@import "tailwindcss";
+
+/* ─── Dark-mode variant (class strategy — works with next-themes) ─────────── */
+@custom-variant dark (&:is(.dark, .dark *));
+
+/* ─── Theme tokens ────────────────────────────────────────────────────────── */
+
+/* Light theme (default) */
+:root {
+  --bg-base:        #f8fafc;
+  --bg-surface:     #ffffff;
+  --bg-elevated:    #f1f5f9;
+  --bg-deep:        #e8edf4;
+  --border:         #e2e8f0;
+  --border-strong:  #cbd5e1;
+  --text-1:         #0f172a;
+  --text-2:         #475569;
+  --text-3:         #64748b;
+  --text-4:         #94a3b8;
+  --text-5:         #cbd5e1;
+  --card-premium-bg: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  --shadow-card:    0 1px 0 rgba(0,0,0,0.04), 0 20px 48px rgba(0,0,0,0.06);
+  --shadow-card-sm: 0 1px 0 rgba(0,0,0,0.03), 0 14px 34px rgba(0,0,0,0.05);
+  --shadow-premium: 0 1px 0 rgba(0,0,0,0.04), 0 24px 60px rgba(0,0,0,0.08);
+  --blue: #3b82f6;
+  --violet: #8b5cf6;
+}
+
+/* Dark theme */
+.dark {
+  --bg-base:        #0b0b0c;
+  --bg-surface:     #111214;
+  --bg-elevated:    #15171a;
+  --bg-deep:        #0d0f12;
+  --border:         #1f2328;
+  --border-strong:  #2b3138;
+  --text-1:         #e6edf3;
+  --text-2:         #9da7b3;
+  --text-3:         #6b7280;
+  --text-4:         #4a5568;
+  --text-5:         #30363d;
+  --card-premium-bg: linear-gradient(180deg, #131518 0%, #101113 100%);
+  --shadow-card:    0 1px 0 rgba(255,255,255,0.03), 0 20px 48px rgba(0,0,0,0.26);
+  --shadow-card-sm: 0 1px 0 rgba(255,255,255,0.03), 0 14px 34px rgba(0,0,0,0.22);
+  --shadow-premium: 0 1px 0 rgba(255,255,255,0.04), 0 24px 60px rgba(0,0,0,0.32);
+}
+
+@theme inline {
+  --color-background: var(--bg-base);
+  --color-foreground: var(--text-1);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* ─── Base ─────────────────────────────────────────────────────────────────── */
+
+body {
+  background: var(--bg-base);
+  color: var(--text-1);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Dark: atmospheric gradient overlay */
+.dark body {
+  background-image:
+    radial-gradient(circle at top left, rgba(59, 130, 246, 0.08), transparent 28%),
+    radial-gradient(circle at top right, rgba(139, 92, 246, 0.06), transparent 24%),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.015), transparent 160px);
+}
+
+/* Light: very subtle cool-blue radial wash */
+html:not(.dark) body {
+  background-image:
+    radial-gradient(circle at top left, rgba(59, 130, 246, 0.04), transparent 30%),
+    radial-gradient(circle at top right, rgba(139, 92, 246, 0.025), transparent 26%);
+}
+
+/* Grid overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-size: 32px 32px;
+  mask-image: radial-gradient(circle at center, black 30%, transparent 90%);
+}
+
+.dark body::before {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+  opacity: 0.12;
+}
+
+html:not(.dark) body::before {
+  background-image:
+    linear-gradient(rgba(15,23,42,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15,23,42,0.06) 1px, transparent 1px);
+  opacity: 0.5;
+}
+
+/* ─── Layout ──────────────────────────────────────────────────────────────── */
+
+.section-shell {
+  /* px-10 matches the nav's max-w-6xl container padding exactly */
+  @apply px-6 py-16 md:px-10 md:py-24;
+}
+
+/* ─── Typography ──────────────────────────────────────────────────────────── */
+
+.section-label {
+  @apply text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--text-4)];
+}
+
+.section-title {
+  @apply text-2xl font-semibold tracking-tight text-[var(--text-1)] md:text-3xl lg:text-[2rem];
+}
+
+.section-copy {
+  @apply text-sm leading-7 text-[var(--text-2)];
+}
+
+.section-wrap {
+  @apply mx-auto max-w-6xl;
+}
+
+.section-head {
+  @apply max-w-3xl;
+}
+
+/* ─── Cards ───────────────────────────────────────────────────────────────── */
+
+.card {
+  @apply rounded-2xl border border-[var(--border)] bg-[var(--bg-surface)]
+    transition-all duration-150;
+  box-shadow: var(--shadow-card);
+}
+
+.card-sm {
+  @apply rounded-xl border border-[var(--border)] bg-[var(--bg-surface)]
+    transition-all duration-150;
+  box-shadow: var(--shadow-card-sm);
+}
+
+.card-premium {
+  @apply rounded-2xl border border-[var(--border-strong)];
+  background: var(--card-premium-bg);
+  box-shadow: var(--shadow-premium);
+}
+
+.surface-inset {
+  @apply rounded-xl border border-[var(--border)] bg-[var(--bg-elevated)];
+}
+
+/* ─── Buttons ─────────────────────────────────────────────────────────────── */
+
+.cta-primary {
+  @apply inline-flex items-center justify-center gap-1.5 rounded-md bg-blue-600
+    px-4 py-2 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(59,130,246,0.22)]
+    transition-all duration-150
+    hover:bg-blue-500 hover:shadow-[0_10px_28px_rgba(59,130,246,0.28)]
+    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 focus-visible:ring-offset-2
+    focus-visible:ring-offset-[var(--bg-base)]
+    active:scale-[0.98];
+}
+
+.cta-secondary {
+  @apply inline-flex items-center justify-center gap-1.5 rounded-md
+    border border-[var(--border-strong)] bg-[var(--bg-elevated)]
+    px-4 py-2 text-sm font-semibold text-[var(--text-2)]
+    transition-all duration-150
+    hover:border-[var(--border)] hover:bg-[var(--bg-surface)] hover:text-[var(--text-1)]
+    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/30 focus-visible:ring-offset-2
+    focus-visible:ring-offset-[var(--bg-base)]
+    active:scale-[0.98];
+}
+
+/* ─── Monospace ───────────────────────────────────────────────────────────── */
+
+.mono {
+  font-family: var(--font-mono), ui-monospace, "Cascadia Code", monospace;
+}
+
+.interactive-lift {
+  @apply transition-all duration-150 hover:-translate-y-px hover:border-[var(--border-strong)] active:scale-[0.98];
+}
+
+.subtle-divider {
+  @apply border-t border-[var(--border)];
+}
+
+.pill {
+  @apply inline-flex items-center gap-2 rounded-full border border-[var(--border-strong)] bg-[var(--bg-elevated)] px-3 py-1.5;
+}
+
+/* ─── AppIcon verified-ping animation ─────────────────────────────────────── */
+@keyframes us-verified-ping {
+  0%   { transform: scale(1);   opacity: 0.55; }
+  70%  { transform: scale(2.6); opacity: 0;    }
+  100% { transform: scale(1);   opacity: 0;    }
+}

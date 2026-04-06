@@ -8,6 +8,9 @@
     "start": "next start",
     "preview": "next build && next start -p 3001",
     "lint": "eslint",
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:report": "playwright show-report",
     "gen:icons": "node generate-icons.mjs",
     "gen:social": "node generate-social.mjs && node generate-social-transparent.mjs && node generate-social-transparent2.mjs",
     "gen:video": "node generate-demo-video.mjs"
@@ -19,6 +22,7 @@
     "react-dom": "19.2.4"
   },
   "devDependencies": {
+    "@playwright/test": "^1.59.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

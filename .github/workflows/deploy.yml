@@ -1,0 +1,105 @@
+name: Deploy to Vercel
+
+# Triggers ONLY when the CI workflow completes successfully on main.
+# This is the hard gate: production is never updated unless build + smoke pass.
+#
+# Architecture:
+#   push to main → CI workflow (build + smoke) → this workflow (deploy)
+#
+# If CI fails, this workflow never runs. Vercel production stays on the last
+# known-good deployment.
+#
+# Secrets required (set in GitHub → Settings → Secrets):
+#   VERCEL_TOKEN      — Vercel personal access token
+#   VERCEL_ORG_ID     — from `vercel link` or Vercel dashboard
+#   VERCEL_PROJECT_ID — from `vercel link` or Vercel dashboard
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    branches: [main]
+    types: [completed]
+
+permissions:
+  contents: read
+  # Needed to post deployment status on PRs (future enhancement).
+  statuses: write
+
+env:
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+jobs:
+  deploy-production:
+    name: Deploy to production
+    # Hard gate: only run when CI completed with success.
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Check out the exact commit that CI tested — not necessarily HEAD.
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel@latest
+
+      - name: Pull Vercel environment (production)
+        run: vercel pull --yes --environment=production --token="${VERCEL_TOKEN}"
+
+      - name: Build for Vercel (production)
+        run: vercel build --prod --token="${VERCEL_TOKEN}"
+
+      - name: Deploy to production
+        id: deploy
+        run: |
+          URL=$(vercel deploy --prebuilt --prod --token="${VERCEL_TOKEN}")
+          echo "url=${URL}" >> "$GITHUB_OUTPUT"
+          echo "Deployed to: ${URL}"
+
+      - name: Write deployment summary
+        run: |
+          {
+            echo "## Vercel Production Deploy"
+            echo ""
+            echo "| Field | Value |"
+            echo "|---|---|"
+            echo "| URL | ${{ steps.deploy.outputs.url }} |"
+            echo "| Commit | \`${{ github.event.workflow_run.head_sha }}\` |"
+            echo "| CI run | ${{ github.event.workflow_run.html_url }} |"
+            echo "| Status | LIVE |"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  # Failure reporter — posts a clear message when CI failed so you know why
+  # the deploy was skipped.
+  skip-report:
+    name: Deploy skipped (CI failed)
+    if: github.event.workflow_run.conclusion != 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Report skip reason
+        run: |
+          {
+            echo "## Deploy Skipped"
+            echo ""
+            echo "Production deploy was **not triggered** because CI did not pass."
+            echo ""
+            echo "| Field | Value |"
+            echo "|---|---|"
+            echo "| CI conclusion | ${{ github.event.workflow_run.conclusion }} |"
+            echo "| CI run | ${{ github.event.workflow_run.html_url }} |"
+            echo "| Branch | ${{ github.event.workflow_run.head_branch }} |"
+            echo "| Commit | \`${{ github.event.workflow_run.head_sha }}\` |"
+            echo ""
+            echo "Fix the failing tests, then push again."
+          } >> "$GITHUB_STEP_SUMMARY"

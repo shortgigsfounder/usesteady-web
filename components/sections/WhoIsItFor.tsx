@@ -29,20 +29,20 @@ export default function WhoIsItFor() {
   return (
     <section className="section-shell border-t border-[var(--border)]">
       <div className="mx-auto max-w-6xl">
-        <p className="section-label">Who it&apos;s for</p>
+        <p className="section-label">Who it's for</p>
         <h2 className="section-title mt-2">
           Built for people who care about what actually runs.
         </h2>
         <p className="section-copy mt-3 max-w-xl">
-          If you&apos;ve ever shipped something and thought &ldquo;wait &mdash; did that really run correctly?&rdquo;,
+          If you've ever shipped something and thought "wait — did that really run correctly?",
           UseSteady is for you.
         </p>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {audiences.map((a) => (
-            <article key={a.title} className="card p-5">
+            <article key={a.title} className="card p-5 md:p-6">
               <div className="flex items-center gap-2.5 mb-3">
-                <span className={`h-2 w-2 rounded-full ${a.dot}`} />
+                <span className={`h-2 w-2 shrink-0 rounded-full ${a.dot}`} />
                 <h3 className={`mono text-xs font-semibold ${a.accent}`}>{a.title}</h3>
               </div>
               <p className="text-sm leading-7 text-[var(--text-2)]">{a.desc}</p>

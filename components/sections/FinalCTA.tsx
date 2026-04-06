@@ -28,12 +28,12 @@ export default function FinalCTA() {
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
             <a
-              href="#transformation"
-              className="cta-primary interactive-lift"
+              href="#try-it"
+              className="cta-primary interactive-lift w-full text-center sm:w-auto"
             >
               Try a real request
             </a>
-            <a href="#demo" className="cta-secondary interactive-lift">
+            <a href="#demo" className="cta-secondary interactive-lift w-full text-center sm:w-auto">
               Run the demo
             </a>
           </div>
@@ -46,7 +46,7 @@ export default function FinalCTA() {
                 href="https://x.com/UseSteady"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[var(--text-2)] hover:text-[var(--text-1)] transition-colors"
+                className="inline-block py-1 text-[var(--text-2)] hover:text-[var(--text-1)] transition-colors min-h-[44px] flex items-center"
               >
                 Follow @UseSteady →
               </a>

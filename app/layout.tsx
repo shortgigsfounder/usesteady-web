@@ -34,8 +34,10 @@ export const metadata: Metadata = {
   // ── Keywords ────────────────────────────────────────────────────────────────
   keywords: [
     "controlled system execution",
+    "execution layer for developers",
     "AI execution control",
     "developer command approval",
+    "review before run",
     "verifiable automation",
     "governed AI execution",
     "deterministic code execution",

@@ -29,6 +29,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // ── Section anchors (hashlinks for now; promote to pages if content grows)
     // These signal to crawlers the page has depth on these topics.
     {
+      url:             `${BASE}/#try-it`,
+      lastModified:    now,
+      changeFrequency: "weekly",
+      priority:        0.9,
+    },
+    {
       url:             `${BASE}/#demo`,
       lastModified:    now,
       changeFrequency: "weekly",
@@ -46,11 +52,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority:        0.7,
     },
+    {
+      url:             `${BASE}/#pricing`,
+      lastModified:    now,
+      changeFrequency: "monthly",
+      priority:        0.7,
+    },
 
     // ── Future cluster pages (uncomment when live) ────────────────────────────
     // { url: `${BASE}/docs`,         changeFrequency: "weekly",  priority: 0.8 },
     // { url: `${BASE}/changelog`,    changeFrequency: "weekly",  priority: 0.7 },
     // { url: `${BASE}/blog`,         changeFrequency: "daily",   priority: 0.7 },
-    // { url: `${BASE}/pricing`,      changeFrequency: "monthly", priority: 0.6 },
   ];
 }

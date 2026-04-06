@@ -57,14 +57,14 @@ export default function Pricing() {
           <article className="card-premium border border-blue-500/25 p-6 md:p-7">
             <div className="flex items-center gap-2">
               <p className="mono text-[10px] uppercase tracking-widest text-[var(--text-2)]">Pro</p>
-              <span className="rounded border border-blue-500/30 bg-blue-500/10 px-1.5 py-0.5 mono text-[9px] font-semibold text-blue-400">
+              <span className="rounded border border-blue-500/30 bg-blue-500/10 px-1.5 py-0.5 mono text-[10px] font-semibold text-blue-400">
                 Recommended for teams
               </span>
             </div>
             <h3 className="mt-2 text-xl font-semibold text-[var(--text-1)]">Team Governance</h3>
-            <div className="mt-2 flex items-end gap-1">
+            <div className="mt-2 flex flex-wrap items-end gap-1">
               <span className="text-3xl font-semibold text-[var(--text-1)]">$19</span>
-              <span className="pb-1 text-sm text-[var(--text-3)]">/user/month · billed annually</span>
+              <span className="min-w-0 pb-1 text-sm text-[var(--text-3)]">/user/month · billed annually</span>
             </div>
 
             <ul className="mt-5 space-y-2.5">
@@ -99,7 +99,7 @@ export default function Pricing() {
             href="https://x.com/UseSteady"
             target="_blank"
             rel="noopener noreferrer"
-            className="shrink-0 text-xs font-semibold text-[var(--text-2)] transition-colors duration-150 hover:text-[var(--text-1)]"
+            className="shrink-0 inline-block py-2.5 px-3 text-xs font-semibold text-[var(--text-2)] transition-colors duration-150 hover:text-[var(--text-1)] min-h-[44px] flex items-center"
           >
             Contact us →
           </a>

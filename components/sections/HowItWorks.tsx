@@ -69,12 +69,12 @@ export default function HowItWorks() {
         </div>
 
         {/* Mobile */}
-        <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:hidden">
+        <div className="mt-8 grid grid-cols-1 gap-3 lg:hidden">
           {steps.map((step) => (
-            <div key={step.n} className={`p-4 ${step.highlight ? "rounded-lg border border-violet-500/40 bg-violet-500/5" : "card-sm hover:border-[var(--border-strong)]"}`}>
+            <div key={step.n} className={`p-5 ${step.highlight ? "rounded-lg border border-violet-500/40 bg-violet-500/5" : "card-sm hover:border-[var(--border-strong)]"}`}>
               <div className="flex items-center gap-2">
                 <span className={`h-1.5 w-1.5 rounded-full ${step.dot}`} />
-                <span className={`mono text-[11px] font-semibold ${step.color}`}>{step.n}</span>
+                <span className={`mono text-xs font-semibold ${step.color}`}>{step.n}</span>
               </div>
               <p className="mt-3 text-sm font-semibold tracking-tight text-[var(--text-1)]">
                 {step.name}

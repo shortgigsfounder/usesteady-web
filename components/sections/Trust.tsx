@@ -42,7 +42,7 @@ export default function Trust() {
           runtime level, not configured away.
         </p>
 
-        <div className="mt-6 inline-block rounded-lg border border-[var(--border-strong)] bg-[var(--bg-elevated)] px-4 py-2.5">
+        <div className="mt-6 inline-block rounded-lg border border-[var(--border-strong)] bg-[var(--bg-elevated)] px-4 py-3">
           <p className="mono text-sm font-semibold text-[var(--text-1)]">
             If it can&apos;t be reviewed, it doesn&apos;t run.
           </p>

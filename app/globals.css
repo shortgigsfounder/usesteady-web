@@ -113,7 +113,7 @@ html:not(.dark) body::before {
 /* ─── Typography ──────────────────────────────────────────────────────────── */
 
 .section-label {
-  @apply text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--text-4)];
+  @apply text-xs font-semibold uppercase tracking-[0.14em] text-[var(--text-4)];
 }
 
 .section-title {
@@ -160,7 +160,7 @@ html:not(.dark) body::before {
 
 .cta-primary {
   @apply inline-flex items-center justify-center gap-1.5 rounded-md bg-blue-600
-    px-4 py-2 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(59,130,246,0.22)]
+    px-5 py-3 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(59,130,246,0.22)]
     transition-all duration-150
     hover:bg-blue-500 hover:shadow-[0_10px_28px_rgba(59,130,246,0.28)]
     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 focus-visible:ring-offset-2
@@ -171,7 +171,7 @@ html:not(.dark) body::before {
 .cta-secondary {
   @apply inline-flex items-center justify-center gap-1.5 rounded-md
     border border-[var(--border-strong)] bg-[var(--bg-elevated)]
-    px-4 py-2 text-sm font-semibold text-[var(--text-2)]
+    px-5 py-3 text-sm font-semibold text-[var(--text-2)]
     transition-all duration-150
     hover:border-[var(--border)] hover:bg-[var(--bg-surface)] hover:text-[var(--text-1)]
     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/30 focus-visible:ring-offset-2
@@ -202,4 +202,28 @@ html:not(.dark) body::before {
   0%   { transform: scale(1);   opacity: 0.55; }
   70%  { transform: scale(2.6); opacity: 0;    }
   100% { transform: scale(1);   opacity: 0;    }
+}
+
+/* ─── TryIt panel fade-in ─────────────────────────────────────────────────── */
+@keyframes us-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+.animate-fade-in {
+  animation: us-fade-in 0.35s ease-out both;
+}
+
+/* ─── Reduced-motion guard ────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

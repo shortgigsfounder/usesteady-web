@@ -43,14 +43,6 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      # Cache the build output so the smoke job doesn't re-build.
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: next-build-${{ github.run_number }}
-          path: .next/
-          retention-days: 1
-
   # ─── 2. Smoke tests (Playwright against production build) ────────────────────
   smoke:
     name: Smoke tests
@@ -68,12 +60,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # Download the pre-built .next/ from the build job — no need to rebuild.
-      - name: Download build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: next-build-${{ github.run_number }}
-          path: .next/
+      # Build again in this job — the site builds in ~10s and artifact sharing
+      # between jobs is unreliable with Next.js's .next/ output structure.
+      - name: Build (next build)
+        run: npm run build
 
       - name: Install Playwright Chromium
         run: npx playwright install --with-deps chromium

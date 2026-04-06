@@ -35,3 +35,5 @@ next-env.d.ts
 
 # generated video frames (intermediate PNGs — demo.mp4 is committed, these are not)
 /demo-frames/
+
+.vercel
